@@ -21,46 +21,38 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xff489dbd), Color(0xff0d8cbd)],
-            stops: [0.25, 0.75],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // const SizedBox(height: 30.0),
-              // Image.asset(
-              //   'paths/suplogo1.png',
-              //   width: 150.0,
-              //   height: 150.0,
-              // ),
-              SizedBox(height: 50.0),
-              // Center(
-              //   child: Text(
-              //     'Your Business: Our Expertise',
-              //     style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Color(0xFF023047)),
-              //     textAlign: TextAlign.center,
-              //   ),
-              // ),
-              Image.asset(
-                'paths/SUPSUP.png',
-                width: 300.0,
-                height: 300.0,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('paths/background_image.jpg'),
+                fit: BoxFit.cover,
               ),
-              SizedBox(height: 50.0),
-              SpinKitPulse(
-                color: Color(0xff8ecae6), // Set the color of the dots
-                size: 120.0, // Set the size of the loading indicator
-              ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            color: Colors.black.withOpacity(0.3), // Adjust the opacity as desired
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'paths/logofinal_text3.png',
+                  width: 600.0,
+                  height: 600.0,
+                ),
+                
+                // SizedBox(height: 40.0),
+                SpinKitPulse(
+                  color: Color(0x5f000000), // Set the color of the dots
+                  size: 120.0, // Set the size of the loading indicator
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
