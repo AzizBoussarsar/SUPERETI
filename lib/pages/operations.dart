@@ -1,127 +1,166 @@
 import 'package:flutter/material.dart';
-import '../widgets/appbar.dart';
-import '../widgets/transparent_curved_bottom_navbar.dart';
+import '../../widgets/appbar.dart';
+import '../../widgets/transparent_curved_bottom_navbar.dart';
 import 'product_card.dart';
 import 'buy_item_page.dart';
-// Import the BuyItemPage
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Buy Products',
+        title: 'Operations',
         leadingOnPressed: () {
-          Navigator.pushReplacementNamed(context, '/buysell');
           // Action du bouton de retour
         },
       ),
       body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(
-                    97, 194, 100, 00), // Your existing dark green color
-                Color.fromARGB(
-                    0, 71, 3, 80), // A slightly lighter shade of green
-              ],
-            ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(97, 194, 100, 00),
+              Color.fromARGB(0, 71, 3, 80),
+            ],
           ),
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(
-                            top: 15.0), // Ajout de padding top
-                        child: Text(
-                          "Select the item you want to buy:",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff8c6a31)),
-                        )),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Replace these values with actual product details
-                  String productName = "Product 1";
-                  String productPrice = "\$20";
-                  String imageUrl = "paths/im.png";
+        ),
+        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirebaseFirestore.instance.collection('produits').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BuyItemPage(
-                        productName: productName,
-                        productPrice: productPrice,
-                        imageUrl: imageUrl,
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      left: 8.0, right: 8.0, top: 16.0, bottom: 16.0),
-                  child: Row(
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+
+            List<Product> products = snapshot.data!.docs
+                .map((DocumentSnapshot<Map<String, dynamic>> doc) {
+              Map<String, dynamic> data = doc.data()!;
+              return Product(
+                name: data['name_pr'] ?? 'No Name',
+                price: data['price']?.toString() ?? '0.0',
+                imageUrl: data['photoUrl'],
+              );
+            }).toList();
+
+            return Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: ProductCard(
-                          name: "Product 1",
-                          price: "\$20",
-                          imageUrl: "paths/im.png",
-                        ),
-                      ),
-                      SizedBox(
-                          width:
-                              16.0), // Ajout d'un espace de 16.0 entre les produits
-                      Expanded(
-                        child: ProductCard(
-                          name: "Product 2",
-                          price: "\$30",
-                          imageUrl: "paths/im.png",
-                        ),
+                      Text(
+                        "Select the item you want to buy:",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                    left: 8.0, right: 8.0, top: 16.0, bottom: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ProductCard(
-                        name: "Product 3",
-                        price: "\$40",
-                        imageUrl: "paths/im.png",
-                      ),
-                    ),
-                    SizedBox(
-                        width:
-                            16.0), // Ajout d'un espace de 16.0 entre les produits
-                    Expanded(
-                      child: ProductCard(
-                        name: "Product 4",
-                        price: "\$50",
-                        imageUrl: "paths/im.png",
-                      ),
-                    ),
-                  ],
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: (products.length / 2).ceil(),
+                    itemBuilder: (context, index) {
+                      int firstProductIndex = index * 2;
+                      int secondProductIndex = firstProductIndex + 1;
+
+                      return Row(
+                        children: [
+                          if (firstProductIndex < products.length)
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  String productName = products[firstProductIndex].name;
+                                  String productPrice = products[firstProductIndex].price;
+                                  String imageUrl = products[firstProductIndex].imageUrl;
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BuyItemPage(
+                                        productName: productName,
+                                        productPrice: productPrice,
+                                        imageUrl: imageUrl,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
+                                    top: 16.0,
+                                    bottom: 16.0,
+                                  ),
+                                  child: ProductCard(
+                                    name: products[firstProductIndex].name,
+                                    price: products[firstProductIndex].price,
+                                    imageUrl: products[firstProductIndex].imageUrl,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (secondProductIndex < products.length)
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  String productName = products[secondProductIndex].name;
+                                  String productPrice = products[secondProductIndex].price;
+                                  String imageUrl = products[secondProductIndex].imageUrl;
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BuyItemPage(
+                                        productName: productName,
+                                        productPrice: productPrice,
+                                        imageUrl: imageUrl,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
+                                    top: 16.0,
+                                    bottom: 16.0,
+                                  ),
+                                  child: ProductCard(
+                                    name: products[secondProductIndex].name,
+                                    price: products[secondProductIndex].price,
+                                    imageUrl: products[secondProductIndex].imageUrl,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-              // Ajoutez plus de lignes au besoin
-            ],
-          )),
+              ],
+            );
+          },
+        ),
+      ),
       extendBody: true,
       bottomNavigationBar: TransparentBtmNavBarCurvedFb1(),
     );
   }
+}
+
+class Product {
+  final String name;
+  final String price;
+  final String imageUrl;
+
+  Product({
+    required this.name,
+    required this.price,
+    required this.imageUrl,
+  });
 }

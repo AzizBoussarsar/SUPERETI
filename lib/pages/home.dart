@@ -25,10 +25,13 @@ class _BankAppState extends State<BankApp> {
       extendBody: true,
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image:
-                AssetImage('paths/back2.png'), // Replace with your image path
-            fit: BoxFit.cover, // Adjust the fit as needed
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [ Color.fromARGB(0, 159, 100, 18),
+              Color.fromARGB(132, 52, 116, 50), // Your existing dark green color
+              // A slightly lighter shade of green
+            ],
           ),
         ),
         child: Scaffold(
@@ -49,14 +52,14 @@ class _BankAppState extends State<BankApp> {
                     children: [
                       _card(
                         id: '*********** 34567',
-                        balance: '\$600',
+                        balance: '600 TND',
                         color: Color.fromARGB(255, 25, 62, 17),
                         image: 'paths/logofinal.png',
                         isBigImage: true,
                       ),
                       _card(
                         id: '*********** 20999',
-                        balance: '\$60',
+                        balance: '60 TND',
                         color: Color.fromARGB(255, 30, 60, 48),
                         image: 'paths/logofinal.png',
                         isBigImage: true,
@@ -118,17 +121,19 @@ class _BankAppState extends State<BankApp> {
         child: Container(
           decoration: BoxDecoration(
             color:
-                Colors.white.withOpacity(1), // Adjust opacity here (0.0 - 1.0)
+                Color.fromARGB(112, 255, 255, 255), // Adjust opacity here (0.0 - 1.0)
             borderRadius: BorderRadius.circular(20),
           ),
-          child: ListView(
+          child: Padding(
+            padding:EdgeInsets.all(8),
+            child:ListView(
             children: [
               _itemTransactions(
                 onTap: () {},
                 iconPath: 'paths/client1.png',
                 desc: 'Mohamed Ben Ticha',
                 date: '24 feb',
-                total: '\$445.000',
+                total: '445 TND',
                 color: Colors.blue,
               ),
               _itemTransactions(
@@ -136,7 +141,7 @@ class _BankAppState extends State<BankApp> {
                 iconPath: 'paths/client1.png',
                 desc: 'Ahmed Ben Taleb Ali',
                 date: '27 feb',
-                total: '\$45.000',
+                total: '600 TND',
                 color: Colors.orange,
               ),
               _itemTransactions(
@@ -144,7 +149,7 @@ class _BankAppState extends State<BankApp> {
                 iconPath: 'paths/client1.png',
                 desc: 'Zeineb Gahbiche',
                 date: '24 Jan',
-                total: '\$45.000',
+                total: '400 TND',
                 color: Colors.deepOrange,
               ),
               _itemTransactions(
@@ -152,11 +157,11 @@ class _BankAppState extends State<BankApp> {
                 iconPath: 'paths/client1.png',
                 desc: 'Aziz Boussarsar',
                 date: '24 Jan',
-                total: '\$45.000',
+                total: '40 TND',
                 color: Colors.deepOrange,
               ),
             ],
-          ),
+          )),
         ),
       ),
     );
@@ -394,8 +399,7 @@ class _BankAppState extends State<BankApp> {
                       fontWeight: FontWeight.bold,
                       fontFamily:
                           'BebasNeue', // Use the correct font family name declared in pubspec.yaml
-                      color: Color.fromARGB(255, 243, 192,
-                          155), // Replace with your desired color
+                      color: Color.fromARGB(255, 216, 151, 105), // Replace with your desired color
                     ),
                   ),
                   Text(
@@ -422,7 +426,7 @@ class _BankAppState extends State<BankApp> {
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 247, 199, 174),
+                    color: Color.fromARGB(255, 216, 151, 105),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: FaIcon(
@@ -449,7 +453,7 @@ class _BankAppState extends State<BankApp> {
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 247, 199, 174),
+                    color: Color.fromARGB(255, 216, 151, 105),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: FaIcon(

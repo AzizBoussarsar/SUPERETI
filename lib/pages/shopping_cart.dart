@@ -472,7 +472,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         borderRadius:
                                             BorderRadius.circular(25)),
                                   )),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(context, '/home');
+                              },
                               child: Text(
                                 "Validate",
                                 style: const TextStyle(

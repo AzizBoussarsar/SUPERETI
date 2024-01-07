@@ -124,7 +124,7 @@ class FournisseurDetailsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Mohsne doit rembourser demain sa dette de 200 \$',
+            'Tu dois rembourser à Mohsen demain ta dette de 200 TND',
             style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,

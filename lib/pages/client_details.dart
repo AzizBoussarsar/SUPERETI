@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import '../widgets/appbar.dart';
+import '../widgets/appbar.dart'; // Import the CustomAppBar widget
 import 'clients.dart';
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ClientDetailsPage extends StatelessWidget {
-  const ClientDetailsPage({Key? key, required Client client}) : super(key: key);
+  const ClientDetailsPage({Key? key, required this.client}) : super(key: key);
+
+  final Client client;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        // Assuming you have a CustomAppBar widget
         title: 'Client Details',
         leadingOnPressed: () {
           Navigator.pop(context);
@@ -19,33 +21,64 @@ class ClientDetailsPage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(
-                    97, 194, 100, 00), // Your existing dark green color
-                Color.fromARGB(
-                    0, 71, 3, 80), // A slightly lighter shade of green
-              ],
-            ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(97, 194, 100, 00),
+              Color.fromARGB(0, 71, 3, 80),
+            ],
           ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildProfileInfo(),
-            const SizedBox(height: 16.0),
-            _buildDeadlineText(),
-            const SizedBox(height: 16.0),
-            _buildTransactionsList(),
-          ],
+        ),
+        child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          future: FirebaseFirestore.instance
+              .collection('clients')
+              .where('name', isEqualTo: client.name)
+              .get(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (snapshot.hasError) {
+              print('Error: ${snapshot.error}');
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
+
+            // Check if there are no documents
+            if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+              return Center(
+                child: Text('Client details not found'),
+              );
+            }
+
+            // Access the first document in the QuerySnapshot
+            DocumentSnapshot<Map<String, dynamic>> clientDocument =
+                snapshot.data!.docs.first;
+            Map<String, dynamic> clientData = clientDocument.data()!;
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildProfileInfo(clientData),
+                const SizedBox(height: 16.0),
+                _buildDeadlineText(),
+                const SizedBox(height: 16.0),
+                _buildTransactionsList(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildProfileInfo() {
+  Widget _buildProfileInfo(Map<String, dynamic> clientData) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -61,9 +94,9 @@ class ClientDetailsPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 40.0,
-            backgroundImage: AssetImage('paths/client1.png'),
+            backgroundImage: NetworkImage(clientData['photoUrl']),
           ),
           const SizedBox(height: 16.0),
           Row(
@@ -72,18 +105,18 @@ class ClientDetailsPage extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'John Doe',
+                  Text(
+                    clientData['name'],
                     style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                   const SizedBox(height: 8.0),
-                  
-                  _buildContactItem(Icons.phone, '+1 123 456 7890'),
+                  _buildContactItem(Icons.phone, clientData['phone']),
                   const SizedBox(width: 8.0),
-                  _buildContactItem(Icons.email, 'johndoe@example.com'),
+                  _buildContactItem(Icons.email, clientData['email']),
                 ],
               ),
             ],
@@ -124,11 +157,12 @@ class ClientDetailsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Mohsne doit rembourser demain sa dette de 200 \$',
+            'Le client doit rembourser demain sa dette de 200 \$',
             style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
           SizedBox(height: 8.0),
           Text(
@@ -170,9 +204,10 @@ class ClientDetailsPage extends StatelessWidget {
             child: Text(
               'Transactions',
               style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
           ),
           _buildTransactionHeader(),
@@ -220,7 +255,8 @@ class ClientDetailsPage extends StatelessWidget {
           Text(transaction.date, style: const TextStyle(color: Colors.black)),
           Text('${transaction.payment}\$',
               style: const TextStyle(color: Colors.black)),
-          Text(transaction.deadline, style: const TextStyle(color: Colors.black)),
+          Text(transaction.deadline,
+              style: const TextStyle(color: Colors.black)),
         ],
       ),
     );
@@ -233,9 +269,10 @@ class Transaction {
   final double payment;
   final String deadline;
 
-  Transaction(
-      {required this.id,
-      required this.date,
-      required this.payment,
-      required this.deadline});
+  Transaction({
+    required this.id,
+    required this.date,
+    required this.payment,
+    required this.deadline,
+  });
 }

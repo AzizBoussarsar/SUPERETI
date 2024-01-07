@@ -3,7 +3,7 @@ import '../../widgets/appbar.dart';
 import '../../widgets/transparent_curved_bottom_navbar.dart';
 import 'client_details.dart';
 import 'create_client.dart';
-import 'package:faker/faker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Client {
   final String name;
@@ -15,16 +15,6 @@ class Client {
 class ClientsPage extends StatelessWidget {
   ClientsPage({Key? key}) : super(key: key);
 
-  static final faker = Faker();
-
-  final List<Client> clients = List.generate(
-    20,
-    (index) => Client(
-      name: faker.person.name(),
-      photoUrl: 'paths/client1.png',
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,105 +25,127 @@ class ClientsPage extends StatelessWidget {
         },
       ),
       body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(
-                    97, 194, 100, 00), // Your existing dark green color
-                Color.fromARGB(
-                    0, 71, 3, 80), // A slightly lighter shade of green
-              ],
-            ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(97, 194, 100, 00),
+              Color.fromARGB(0, 71, 3, 80),
+            ],
           ),
-          child: ListView.builder(
-            itemCount: clients.length,
-            itemBuilder: (context, index) {
-              final client = clients[index];
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  elevation: 5,
-                  child: SizedBox(
-                    height: 120,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 60, // Réduction de la taille de l'image
-                              height: 60, // Réduction de la taille de l'image
-                              padding:
-                                  EdgeInsets.all(2), // Ajustement de la bordure
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                    color: Colors.grey,
-                                    width:
-                                        1), // Réduction de l'épaisseur de la bordure
-                              ),
-                              child: Center(
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage: AssetImage(client.photoUrl),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                                width:
-                                    20), // Espacement entre l'image et le texte
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                      height:
-                                          4), // Fait descendre légèrement le texte
-                                  Text(
-                                    client.name,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16, // Taille de police ajustée
+        ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('clients').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            List<Client> clients = snapshot.data!.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                return Client(name: data['name'], photoUrl: data['photoUrl']);
+              },
+            ).toList();
+
+            return ListView.builder(
+              itemCount: clients.length,
+              itemBuilder: (context, index) {
+                final client = clients[index];
+                return GestureDetector(
+                  onTap: () {
+                    // Handle profile tap to navigate to details page
+                    navigateToDetailsPage(context, client);
+                  },
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 5,
+                      child: SizedBox(
+                        height: 120,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  padding: EdgeInsets.all(2),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                      width: 1,
                                     ),
-                                    textAlign: TextAlign.center,
                                   ),
-                                  SizedBox(
-                                      height:
-                                          6), // Ajuste l'espace sous le texte
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          navigateToDetailsPage(context, client);
-                                        },
-                                        child: Icon(
-                                          Icons.arrow_forward,
-                                          color: Colors.grey,
+                                  child: Center(
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage:
+                                          NetworkImage(client.photoUrl),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 20),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 4),
+                                      Text(
+                                        client.name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(height: 6),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
-          )),
+                );
+              },
+            );
+          },
+        ),
+      ),
       floatingActionButton: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,

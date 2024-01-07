@@ -63,6 +63,21 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, 
+      appBar: AppBar(
+          toolbarHeight: 30,
+          backgroundColor: Colors.transparent, // Couleur transparente
+          elevation: 0, // Supprimer l'ombre de l'AppBar
+          leading: IconButton(
+            icon: Icon(
+              Icons.keyboard_arrow_left,
+              color: Color(0xffffffff),
+            ),
+            onPressed: () {
+              Navigator.pop(context); // Action de retour
+            },
+          ),
+        ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -161,10 +176,10 @@ class _StatisticsState extends State<Statistics> {
                       style: TextStyle(color: Colors.white54),
                     ),
                     const Text(
-                      '\$4,100',
+                      '4,100 TND',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 28,
+                        fontSize: 22,
                         color: Colors.white54,
                       ),
                     ),
@@ -223,7 +238,7 @@ class _StatisticsState extends State<Statistics> {
               spots: data[_currentIndex].chartData,
               isCurved: true,
               curveSmoothness: 0.4,
-              color: Color.fromARGB(255, 244, 185, 24),
+              color: Color.fromARGB(255, 209, 142, 94),
               barWidth: 6,
               isStrokeCapRound: true,
               dotData: FlDotData(show: false),
@@ -288,9 +303,9 @@ class _StatisticsState extends State<Statistics> {
               Column(
                 children: [
                   Text(
-                    '\$${data[_currentIndex].income.toStringAsFixed(0)}',
+                    '${data[_currentIndex].income.toStringAsFixed(0) } TND',
                     style: TextStyle(
-                      fontSize: 38,
+                      fontSize: 25,
                       color: Colors.white,
                     ),
                   ),
@@ -313,9 +328,9 @@ class _StatisticsState extends State<Statistics> {
                 ),
               ),
               Text(
-                '\$${data[_currentIndex].expenses.toStringAsFixed(0)}',
+                '${data[_currentIndex].expenses.toStringAsFixed(0)} TND',
                 style: TextStyle(
-                  fontSize: 38,
+                  fontSize: 25,
                   color: Colors.white,
                 ),
               ),
