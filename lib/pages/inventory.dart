@@ -63,7 +63,7 @@ class InventoryPage extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Inventory',
         leadingOnPressed: () {
-          // Action du bouton de retourA
+          Navigator.pushReplacementNamed(context, '/home');
         },
       ),
       backgroundColor: Colors.white,
@@ -123,8 +123,7 @@ class InventoryPage extends StatelessWidget {
                                   horizontal: 4.0, vertical: 4.0),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Color(
-                                      0x4dfcf5ed), // Couleur de fond du Container à l'intérieur de la carte
+                                  color: Colors.grey[200], // Couleur de fond du Container à l'intérieur de la carte
                                   borderRadius: BorderRadius.circular(15.0),
                                 ),
                                 width: 150,

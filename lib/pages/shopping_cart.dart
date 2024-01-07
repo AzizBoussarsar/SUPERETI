@@ -57,7 +57,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
       appBar: CustomAppBar(
         title: 'Clients Cart',
         leadingOnPressed: () {
-          Navigator.pop(context);
+          Navigator.pushReplacementNamed(context, '/buysell');
           // Action du bouton de retour
         },
       ),

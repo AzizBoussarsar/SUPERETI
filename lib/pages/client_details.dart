@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/appbar.dart';
 import 'clients.dart';
 
 
@@ -9,18 +10,26 @@ class ClientDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profil du Client'),
+      appBar: CustomAppBar(
+        title: 'Client Details',
+        leadingOnPressed: () {
+          Navigator.pop(context);
+        },
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue, Colors.indigo],
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromARGB(
+                    97, 194, 100, 00), // Your existing dark green color
+                Color.fromARGB(
+                    0, 71, 3, 80), // A slightly lighter shade of green
+              ],
+            ),
           ),
-        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,7 +49,7 @@ class ClientDetailsPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0x5d857c6d),
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: const [
           BoxShadow(
@@ -101,7 +110,7 @@ class ClientDetailsPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0x5d857c6d),
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: const [
           BoxShadow(
@@ -143,7 +152,7 @@ class ClientDetailsPage extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0x5d857c6d),
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: const [
           BoxShadow(

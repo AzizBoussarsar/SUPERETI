@@ -31,7 +31,7 @@ class ClientsPage extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Clients',
         leadingOnPressed: () {
-          // Action du bouton de retour
+          Navigator.pushReplacementNamed(context, '/home');
         },
       ),
       body: Container(
@@ -110,11 +110,15 @@ class ClientsPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.grey,
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          navigateToDetailsPage(context, client);
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_forward,
+                                          color: Colors.grey,
+                                        ),
                                       ),
                                     ),
                                   ),
