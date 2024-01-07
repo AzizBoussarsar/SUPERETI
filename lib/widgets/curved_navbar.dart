@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: unused_local_variable
 
+import 'package:flutter/material.dart';
 
 class BottomNavBarCurvedFb1 extends StatefulWidget {
   const BottomNavBarCurvedFb1({Key? key}) : super(key: key);
@@ -9,7 +10,6 @@ class BottomNavBarCurvedFb1 extends StatefulWidget {
 }
 
 class _BottomNavBarCurvedFb1State extends State<BottomNavBarCurvedFb1> {
-  
   //- - - - - - - - - instructions - - - - - - - - - - - - - - - - - -
   // WARNING! MUST ADD extendBody: true; TO CONTAINING SCAFFOLD
   //
@@ -70,7 +70,9 @@ class _BottomNavBarCurvedFb1State extends State<BottomNavBarCurvedFb1> {
                   text: "Home",
                   icon: Icons.home_outlined,
                   selected: true,
-                  onPressed: () {Navigator.pushReplacementNamed(context, '/home');},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  },
                   defaultColor: secondaryColor,
                   selectedColor: primaryColor,
                 ),
@@ -78,7 +80,9 @@ class _BottomNavBarCurvedFb1State extends State<BottomNavBarCurvedFb1> {
                   text: "Inventory",
                   icon: Icons.inventory_outlined,
                   selected: false,
-                  onPressed: () {Navigator.pushReplacementNamed(context, '/inventory');},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/inventory');
+                  },
                   defaultColor: secondaryColor,
                   selectedColor: primaryColor,
                 ),
@@ -87,7 +91,9 @@ class _BottomNavBarCurvedFb1State extends State<BottomNavBarCurvedFb1> {
                     text: "Clients",
                     icon: Icons.person_outlined,
                     selected: false,
-                    onPressed: () {Navigator.pushReplacementNamed(context, '/clients');},
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/clients');
+                    },
                     defaultColor: secondaryColor,
                     selectedColor: primaryColor),
                 NavBarIcon(
@@ -108,13 +114,13 @@ class _BottomNavBarCurvedFb1State extends State<BottomNavBarCurvedFb1> {
 }
 
 class BottomNavCurvePainter extends CustomPainter {
-  BottomNavCurvePainter({this.backgroundColor = Colors.white, this.insetRadius = 38});
+  BottomNavCurvePainter(
+      {this.backgroundColor = Colors.white, this.insetRadius = 38});
 
   Color backgroundColor;
   double insetRadius;
   @override
   void paint(Canvas canvas, Size size) {
-
     Paint paint = Paint()
       ..color = backgroundColor
       ..style = PaintingStyle.fill;

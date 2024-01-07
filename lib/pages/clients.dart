@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/appbar.dart';
-import '../widgets/transparent_curved_bottom_navbar.dart';
+import '../../widgets/appbar.dart';
+import '../../widgets/transparent_curved_bottom_navbar.dart';
 import 'client_details.dart';
 import 'create_client.dart';
 import 'package:faker/faker.dart';

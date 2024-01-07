@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/appbar.dart';
+import '../../widgets/appbar.dart';
 
-import '../widgets/transparent_curved_bottom_navbar.dart';
+import '../../widgets/transparent_curved_bottom_navbar.dart';
 
 class InventoryPage extends StatelessWidget {
   InventoryPage({Key? key}) : super(key: key);

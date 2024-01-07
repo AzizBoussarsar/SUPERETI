@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "521493258501",
+    "project_id": "supereti",
+    "storage_bucket": "supereti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521493258501:android:70e461b909e5105fd3976c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521493258501-oekilis8km91o42vudh4hjkcacvep8bc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_application_1",
+            "certificate_hash": "c808bc84108c6016c57b114bbe14102c8e70e9a2"
+          }
+        },
+        {
+          "client_id": "521493258501-1j9bgroehekbcpu5dm0skcs0sbrs6ila.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxLn0tgO2UeILpTR6yffVX4YHLTLm5yGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521493258501-1j9bgroehekbcpu5dm0skcs0sbrs6ila.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,7 @@
 // main.dart
 import 'package:flutter/material.dart';
-import '../widgets/appbar.dart';
-import '../widgets/transparent_curved_bottom_navbar.dart';
+import '../../widgets/appbar.dart';
+import '../../widgets/transparent_curved_bottom_navbar.dart';
 import 'product_card.dart';
 import 'buy_item_page.dart';
 // Import the BuyItemPage

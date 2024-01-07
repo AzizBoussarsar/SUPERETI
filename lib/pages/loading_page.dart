@@ -32,7 +32,8 @@ class _LoadingPageState extends State<LoadingPage> {
             ),
           ),
           Container(
-            color: Colors.black.withOpacity(0.3), // Adjust the opacity as desired
+            color:
+                Colors.black.withOpacity(0.3), // Adjust the opacity as desired
           ),
           Center(
             child: Column(

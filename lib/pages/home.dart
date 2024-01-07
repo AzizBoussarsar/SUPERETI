@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../widgets/transparent_curved_bottom_navbar.dart';
+import '../../widgets/transparent_curved_bottom_navbar.dart';
 import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'statistics.dart';
+import 'toast.dart';
 
 class BankApp extends StatefulWidget {
   const BankApp({Key? key}) : super(key: key);
@@ -22,89 +24,89 @@ class _BankAppState extends State<BankApp> {
     return Scaffold(
       extendBody: true,
       body: Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-              'paths/back2.png'), // Replace with your image path
-          fit: BoxFit.cover, // Adjust the fit as needed
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image:
+                AssetImage('paths/back2.png'), // Replace with your image path
+            fit: BoxFit.cover, // Adjust the fit as needed
+          ),
         ),
-      ),
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(
-            0, 255, 255, 255), // Set Scaffold's background color as transparent
-        body: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 40,
-              ),
-              _top(),
-              SizedBox(
-                height: 310,
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _card(
-                      id: '*********** 34567',
-                      balance: '\$600',
-                      color: Color.fromARGB(255, 25, 62, 17),
-                      image: 'paths/logofinal.png',
-                      isBigImage: true,
-                    ),
-                    _card(
-                      id: '*********** 20999',
-                      balance: '\$60',
-                      color: Color.fromARGB(255, 30, 60, 48),
-                      image: 'paths/logofinal.png',
-                      isBigImage: true,
-                    ),
-                  ],
+        child: Scaffold(
+          backgroundColor: const Color.fromARGB(0, 255, 255,
+              255), // Set Scaffold's background color as transparent
+          body: SafeArea(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
                 ),
-              ),
-              // const SizedBox(height: 30),
-              // TableCalendar(
-              //   firstDay: DateTime.utc(2010, 10, 16),
-              //   lastDay: DateTime.utc(2030, 3, 14),
-              //   focusedDay: _focusedDay,
-              //   calendarFormat: _calendarFormat,
-              //   selectedDayPredicate: (day) {
-              //     // Use _selectedDay here to mark the selected day
-              //     return isSameDay(_selectedDay, day);
-              //   },
-              //   onDaySelected: (selectedDay, focusedDay) {
-              //     setState(() {
-              //       _selectedDay = selectedDay;
-              //       _focusedDay = focusedDay;
-              //     });
-              //     // Implement action when a day is selected
-              //   },
-              //   onPageChanged: (focusedDay) {
-              //     _focusedDay = focusedDay;
-              //     // Implement action when page changes
-              //   },
-              // ),
-              const SizedBox(height: 30),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Transaction',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                _top(),
+                SizedBox(
+                  height: 310,
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _card(
+                        id: '*********** 34567',
+                        balance: '\$600',
+                        color: Color.fromARGB(255, 25, 62, 17),
+                        image: 'paths/logofinal.png',
+                        isBigImage: true,
+                      ),
+                      _card(
+                        id: '*********** 20999',
+                        balance: '\$60',
+                        color: Color.fromARGB(255, 30, 60, 48),
+                        image: 'paths/logofinal.png',
+                        isBigImage: true,
+                      ),
+                    ],
+                  ),
+                ),
+                // const SizedBox(height: 30),
+                // TableCalendar(
+                //   firstDay: DateTime.utc(2010, 10, 16),
+                //   lastDay: DateTime.utc(2030, 3, 14),
+                //   focusedDay: _focusedDay,
+                //   calendarFormat: _calendarFormat,
+                //   selectedDayPredicate: (day) {
+                //     // Use _selectedDay here to mark the selected day
+                //     return isSameDay(_selectedDay, day);
+                //   },
+                //   onDaySelected: (selectedDay, focusedDay) {
+                //     setState(() {
+                //       _selectedDay = selectedDay;
+                //       _focusedDay = focusedDay;
+                //     });
+                //     // Implement action when a day is selected
+                //   },
+                //   onPageChanged: (focusedDay) {
+                //     _focusedDay = focusedDay;
+                //     // Implement action when page changes
+                //   },
+                // ),
+                const SizedBox(height: 30),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Transaction',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              _transactions(),
-            ],
+                const SizedBox(height: 10),
+                _transactions(),
+              ],
+            ),
           ),
         ),
       ),
-    ),
       bottomNavigationBar: TransparentBtmNavBarCurvedFb1(),
     );
   }
@@ -115,8 +117,8 @@ class _BankAppState extends State<BankApp> {
         padding: const EdgeInsets.symmetric(horizontal: 18),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white
-                .withOpacity(1), // Adjust opacity here (0.0 - 1.0)
+            color:
+                Colors.white.withOpacity(1), // Adjust opacity here (0.0 - 1.0)
             borderRadius: BorderRadius.circular(20),
           ),
           child: ListView(
@@ -440,7 +442,9 @@ class _BankAppState extends State<BankApp> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Add your logout logic here
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushNamed(context, "/login");
+                  showToast(message: "Successfully signed out");
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
