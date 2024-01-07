@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage>
       // If login is successful, navigate to the home page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MyHomePage()),
+        MaterialPageRoute(builder: (context) => const BankApp()),
       );
     } else {
       // If login fails, display an error message
@@ -67,7 +67,7 @@ Widget build(BuildContext context) {
   // Define the color #E3E3E3 and #61A3BA
   Color boxColor = Color(0xFFfdfcdc);
   Color loginButtonColor = Color(0xFFd8d355);
-  Color linkColor = Color(0xFFeba06a); // Set the link color to blue
+  Color linkColor = Color.fromARGB(255, 235, 201, 153); // Set the link color to blue
 
   return Scaffold(
     
@@ -171,7 +171,14 @@ Widget build(BuildContext context) {
                             });
                           },
                         ),
-                        Text('Remember Me'),
+                        Text(
+                          'Remember Me',
+                          style:TextStyle(
+                            color: boxColor,
+                            fontWeight: FontWeight.bold
+                          ), // Set the text co ,
+
+                        ),
                       ],
                     ),
                     TextButton(
@@ -181,7 +188,9 @@ Widget build(BuildContext context) {
                       child: Text(
                         'Forgot Password?',
                         style: TextStyle(
-                            color: linkColor), // Set the text color to the link color
+                            color: linkColor,
+                            fontWeight: FontWeight.bold
+                          ), // Set the text color to the link color
                       ),
                     ),
                   ],

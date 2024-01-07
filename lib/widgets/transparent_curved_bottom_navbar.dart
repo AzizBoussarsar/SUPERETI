@@ -7,7 +7,7 @@ class TransparentBtmNavBarCurvedFb1 extends StatefulWidget {
   final Color backgroundColor;
 
   TransparentBtmNavBarCurvedFb1(
-      {this.primaryColor = Colors.green,
+      {this.primaryColor = const Color.fromARGB(255, 19, 71, 21),
       this.secondaryColor = Colors.white,
       Key? key})
       : backgroundColor = Colors.black.withOpacity(.5),
@@ -62,10 +62,13 @@ class _TransparentBtmNavBarCurvedFb1State extends State<TransparentBtmNavBarCurv
             child: ClipOval(
               child: FloatingActionButton(
                 backgroundColor: primaryColor,
-                child: Icon(Icons.attach_money_outlined),
+                child: Icon(
+                  Icons.attach_money_outlined,
+                  color: Colors.white,
+                ),
                 elevation: 0.1,
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/operations');
+                  Navigator.pushReplacementNamed(context, '/buysell');
                 },
               ),
             ),

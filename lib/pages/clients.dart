@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/appbar.dart';
 import '../widgets/transparent_curved_bottom_navbar.dart';
 import 'client_details.dart';
 import 'create_client.dart';
@@ -24,42 +25,119 @@ class ClientsPage extends StatelessWidget {
     ),
   );
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: const Color(0xFF011D47),
-          title: Center(child: Text("Clients",
-        style:TextStyle(color: Color(0xFFf5f5f4)))),
-      ),
-      body: ListView.builder(
-        itemCount: clients.length,
-        itemBuilder: (context, index) {
-          final client = clients[index];
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(client.photoUrl),
-              ),
-              title: Text(client.name),
-              trailing: const Icon(Icons.arrow_forward),
-              onTap: () {
-                // Handle details link tap
-                navigateToDetailsPage(context, client);;
-              },
-            ),
-          );
+      appBar: CustomAppBar(
+        title: 'Clients',
+        leadingOnPressed: () {
+          // Action du bouton de retour
         },
       ),
+      body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromARGB(
+                    97, 194, 100, 00), // Your existing dark green color
+                Color.fromARGB(
+                    0, 71, 3, 80), // A slightly lighter shade of green
+              ],
+            ),
+          ),
+          child: ListView.builder(
+            itemCount: clients.length,
+            itemBuilder: (context, index) {
+              final client = clients[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  elevation: 5,
+                  child: SizedBox(
+                    height: 120,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 60, // Réduction de la taille de l'image
+                              height: 60, // Réduction de la taille de l'image
+                              padding:
+                                  EdgeInsets.all(2), // Ajustement de la bordure
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width:
+                                        1), // Réduction de l'épaisseur de la bordure
+                              ),
+                              child: Center(
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage: AssetImage(client.photoUrl),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                                width:
+                                    20), // Espacement entre l'image et le texte
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                      height:
+                                          4), // Fait descendre légèrement le texte
+                                  Text(
+                                    client.name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16, // Taille de police ajustée
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                      height:
+                                          6), // Ajuste l'espace sous le texte
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          )),
       floatingActionButton: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 5.0,
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
               offset: Offset(0, 3),
             ),
           ],
@@ -70,6 +148,7 @@ class ClientsPage extends StatelessWidget {
             navigateToCreateClientPage(context);
           },
           child: const Icon(Icons.add),
+          backgroundColor: Color.fromARGB(255, 210, 142, 94),
         ),
       ),
       extendBody: true,
@@ -77,7 +156,7 @@ class ClientsPage extends StatelessWidget {
     );
   }
 
-  void navigateToDetailsPage(BuildContext context ,Client client) {
+  void navigateToDetailsPage(BuildContext context, Client client) {
     // Navigate to the details page using Navigator.push
     Navigator.push(
       context,
@@ -88,15 +167,15 @@ class ClientsPage extends StatelessWidget {
   }
 
   void navigateToCreateClientPage(BuildContext context) {
-  // Navigate to the create client page using Navigator.push
-  // Replace `CreateClientPage` with the appropriate page for creating a client
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => CreateClientPage(),
-    ),
-  );
-}
+    // Navigate to the create client page using Navigator.push
+    // Replace `CreateClientPage` with the appropriate page for creating a client
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateClientPage(),
+      ),
+    );
+  }
 }
 
 class _CustomNavBar extends StatefulWidget {
@@ -138,7 +217,7 @@ class _CustomNavBarState extends State<_CustomNavBar> {
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
       backgroundColor: const Color(0xFF011D47), // Dark blue color
-      unselectedItemColor:  const Color(0xFFf5f5f4),
+      unselectedItemColor: const Color(0xFFf5f5f4),
       selectedItemColor: const Color(0xFF61A3BA),
       showUnselectedLabels: false,
       showSelectedLabels: true,

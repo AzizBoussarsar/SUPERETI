@@ -43,7 +43,6 @@ class _LoadingPageState extends State<LoadingPage> {
                   width: 600.0,
                   height: 600.0,
                 ),
-                
                 // SizedBox(height: 40.0),
                 SpinKitPulse(
                   color: Color(0x5f000000), // Set the color of the dots
