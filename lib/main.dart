@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'pages/fournisseurs.dart';
 
 import 'pages/inventory.dart';
 import '/pages/home.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/operations': (context) => ProductPage(),
         '/shoppingcart': (context) => ShoppingCart(),
         '/buysell': (context) => BuySellPage(),
+        '/fournisseurs': (context) => FournisseursPage()
       },
     );
   }

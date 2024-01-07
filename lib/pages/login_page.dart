@@ -157,7 +157,12 @@ class _LoginPageState extends State<LoginPage>
                               });
                             },
                           ),
-                          Text('Remember Me'),
+                          Text(
+                            'Remember Me',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                       TextButton(
@@ -172,7 +177,8 @@ class _LoginPageState extends State<LoginPage>
                         child: Text(
                           'Forgot Password?',
                           style: TextStyle(
-                            color: linkColor,
+                            color: Color.fromARGB(255, 255, 218, 85),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -184,7 +190,7 @@ class _LoginPageState extends State<LoginPage>
                     height: 45,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Color(0xFFd8d355),
+                      color: Color.fromARGB(255, 189, 209, 89),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black12,
@@ -222,8 +228,16 @@ class _LoginPageState extends State<LoginPage>
                       width: double.infinity,
                       height: 45,
                       decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: Color.fromARGB(255, 232, 85, 56),
                         borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                       ),
                       child: Center(
                         child: Row(
@@ -255,7 +269,9 @@ class _LoginPageState extends State<LoginPage>
                         'New Member? ',
                         style: TextStyle(
                             fontSize: 12.0,
-                            color: const Color.fromARGB(255, 0, 0, 0)),
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            fontWeight: FontWeight.bold                            
+                            ),
                       ),
                       TextButton(
                         onPressed: () {
@@ -270,8 +286,9 @@ class _LoginPageState extends State<LoginPage>
                           'Register now',
                           style: TextStyle(
                             fontSize: 12.0,
-                            color: linkColor,
-                            decoration: TextDecoration.underline,
+                            color: Color.fromARGB(255, 255, 218, 85),
+                            fontWeight: FontWeight.bold,
+                            
                           ),
                         ),
                       ),

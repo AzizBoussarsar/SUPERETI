@@ -113,7 +113,9 @@ class _TransparentBtmNavBarCurvedFb1State extends State<TransparentBtmNavBarCurv
                   text: "Suppliers",
                   icon: Icons.local_shipping_outlined,
                   selected: false,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/fournisseurs');
+                  },
                   selectedColor: primaryColor,
                   defaultColor: secondaryColor,
                 ),

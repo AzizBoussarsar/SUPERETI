@@ -37,8 +37,8 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(.35),
-        borderRadius: BorderRadius.circular(10),
+        color: Color(0xFFfdfcdc),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: new TextFormField(
         style: TextStyle(color: Colors.black),
@@ -52,6 +52,7 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
         decoration: new InputDecoration(
           border: InputBorder.none,
           filled: true,
+          fillColor: Color(0xFFfdfcdc),
           hintText: widget.hintText,
           hintStyle: TextStyle(color: Colors.black45),
           suffixIcon: new GestureDetector(
