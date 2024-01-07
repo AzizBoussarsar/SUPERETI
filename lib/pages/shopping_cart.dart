@@ -12,34 +12,34 @@ class ShoppingCart extends StatefulWidget {
 class _ShoppingCartState extends State<ShoppingCart> {
   List<Item> items = [
     Item(
-      name: 'Produit 1',
+      name: 'Pasta',
       quantity: 0,
       price: 10,
       image: 'paths/warda_coquilettes.png', // Chemin vers l'image
     ),
     Item(
-      name: 'Produit 2',
+      name: 'Raieb',
       quantity: 0,
       price: 20,
-      image: 'paths/warda_coquilettes.png', // Chemin vers l'image
+      image: 'paths/Rb.png', // Chemin vers l'image
     ),
     Item(
-      name: 'Produit 3',
+      name: 'Couscous',
       quantity: 0,
       price: 20,
-      image: 'paths/warda_coquilettes.png', // Chemin vers l'image
+      image: 'paths/s.png', // Chemin vers l'image
     ),
     Item(
-      name: 'Produit 4',
+      name: 'Coffee',
       quantity: 0,
       price: 20,
-      image: 'paths/warda_coquilettes.png', // Chemin vers l'image
+      image: 'paths/cf.png', // Chemin vers l'image
     ),
     Item(
-      name: 'Produit 5',
+      name: 'Tomate sauce',
       quantity: 0,
       price: 20,
-      image: 'paths/warda_coquilettes.png', // Chemin vers l'image
+      image: 'paths/tm.png', // Chemin vers l'image
     ),
   ];
 
@@ -132,7 +132,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 8),
-                                Text('Prix unitaire: \$${items[index].price}',
+                                Text('Unit price: ${items[index].price} TND',
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff0c3119),
@@ -206,9 +206,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                 ),
                                 SizedBox(height: 8),
                                 Padding(
-                                    padding: EdgeInsets.only(left: 16),
+                                    padding: EdgeInsets.only(left: 0),
                                     child: Text(
-                                      'Prix total: \$${items[index].price * items[index].quantity}',
+                                      'Total price: ${items[index].price * items[index].quantity} TND',
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Color(0xff0c3119),
@@ -403,7 +403,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                'Total à payer: ${widget.totalAmount.toStringAsFixed(2)} DT',
+                'Total : ${widget.totalAmount.toStringAsFixed(2)} TND',
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -416,13 +416,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     _clientName = value;
                   });
                 },
-                labelText: 'Nom du client',
+                labelText: 'Client name',
               ),
               SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Mode de paiement', style: TextStyle(fontSize: 20)),
+                  Text('Payment method', style: TextStyle(fontSize: 20)),
                   SizedBox(height: 10),
                   ElevatedCheckbox(
                     value: _isCashSelected,

@@ -27,12 +27,12 @@ class ProductCard extends StatelessWidget {
           children: [
             Padding(
                 padding: EdgeInsets.only(top: 8),
-                child: Image.asset(
-                  imageUrl, // Utilisation de Image.asset pour charger l'image depuis le chemin local
-                  height: 60, // Réduction de la hauteur de l'image
-                  width: 60, // Réduction de la largeur de l'image
-                  fit: BoxFit.cover,
-                )),
+                child: Image.network(
+                  imageUrl,
+            width: 100, // Set an appropriate width
+            height: 100, // Set an appropriate height
+            fit: BoxFit.cover, // Adjust the BoxFit property as needed
+              )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -45,7 +45,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Price: $price',
+                    'Price: $price TND',
                     textAlign: TextAlign.center, // Centrer le texte
                     style: TextStyle(fontSize: 14, color: Color(0xff065f0d)),
                   ),

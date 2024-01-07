@@ -12,7 +12,7 @@ class InventoryPage extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Inventory',
         leadingOnPressed: () {
-          // Action du bouton de retourA
+          Navigator.pushReplacementNamed(context, '/home');
         },
       ),
       backgroundColor: Colors.white,
@@ -123,7 +123,7 @@ class InventoryPage extends StatelessWidget {
                                       ),
                                       SizedBox(height: 6.0),
                                       Text(
-                                        'Price: \$${item.price.toStringAsFixed(2)}',
+                                        'Price: ${item.price.toStringAsFixed(2)} TND',
                                         style: TextStyle(fontSize: 14.0),
                                       ),
                                       Text(

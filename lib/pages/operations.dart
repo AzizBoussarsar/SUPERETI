@@ -10,9 +10,9 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Operations',
+        title: 'Buy Products',
         leadingOnPressed: () {
-          // Action du bouton de retour
+          Navigator.pushReplacementNamed(context, '/buysell');
         },
       ),
       body: Container(
